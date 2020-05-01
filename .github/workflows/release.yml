@@ -10,6 +10,7 @@ jobs:
     name: Builder
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: docker/build-push-action@v1
         with:
           repository: zakcutner/gowhale
@@ -21,6 +22,7 @@ jobs:
     name: Runtime
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: docker/build-push-action@v1
         with:
           repository: zakcutner/gowhale
@@ -32,6 +34,7 @@ jobs:
     needs: [builder, runtime]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - uses: docker/build-push-action@v1
         with:
           repository: zakcutner/gowhale
