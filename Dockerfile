@@ -1,32 +1,21 @@
-FROM golang:alpine AS alpine
+FROM alpine as alpine
 
-RUN apk add --no-cache \
-  git \
-  ca-certificates
+# Install certificates for use with TLS.
+RUN apk add --no-cache ca-certificates
 
+# Add a new user and group to run the app. Its home directory can be mounted as
+# a volume used for any persistent cache by the app.
 RUN addgroup -S app && \
   adduser -SDh /var/lib/app -G app app
 
-WORKDIR /src
+FROM scratch
 
-FROM scratch AS runtime
-
+# Copy certificates, users and the home directory from Alpine.
 COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
 COPY --from=alpine /etc/passwd /etc/passwd
 COPY --from=alpine /etc/group /etc/group
 COPY --from=alpine --chown=app:app /var/lib/app /var/lib/app
 
+# Switch to the app user and run the app.
 USER app
-
-FROM alpine AS builder
-
-COPY . .
-
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 \
-  go build -trimpath -tags netgo -ldflags '-extldflags "-static" -s -w' -o /usr/bin/app
-
-FROM runtime
-
-COPY --from=builder /usr/bin/app /usr/bin/app
-
 ENTRYPOINT ["app"]

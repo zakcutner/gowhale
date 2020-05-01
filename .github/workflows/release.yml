@@ -1,0 +1,41 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  builder:
+    name: Builder
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/build-push-action@v1
+        with:
+          repository: zakcutner/gowhale
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: builder
+          path: builder
+  runtime:
+    name: Runtime
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/build-push-action@v1
+        with:
+          repository: zakcutner/gowhale
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: latest
+  example:
+    name: Example
+    needs: [builder, runtime]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/build-push-action@v1
+        with:
+          repository: zakcutner/gowhale
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          tags: example
+          path: example
