@@ -9,7 +9,7 @@
 
 You can create a minimal Dockerfile to use gowhale with your project, like this one that's also [listed in the example directory](example/Dockerfile).
 
-```docker
+```dockerfile
 FROM zakcutner/gowhale:builder as builder
 FROM zakcutner/gowhale
 
