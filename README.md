@@ -1,8 +1,11 @@
-### :whale: gowhale
+# :whale: gowhale
+
+![Release](https://github.com/zakcutner/gowhale/workflows/Release/badge.svg)
+[![License](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 **A simple Docker image for compiling and running a generic Go project. It uses the [Alpine-flavoured Golang image](https://hub.docker.com/_/golang) to compile the project into a binary, and a minimal [scratch image](https://hub.docker.com/_/scratch) to run the program without root privileges and overhead.**
 
-#### :electric_plug: Usage
+### :electric_plug: Usage
 
 You can create a minimal Dockerfile to use gowhale with your project, like this one that's also [listed in the example directory](example/Dockerfile).
 
@@ -28,10 +31,10 @@ $ docker run gopher:latest foo bar baz
 > $ docker run --sysctl net.ipv4.ip_unprivileged_port_start=0 gopher:latest
 > ```
 
-#### :raised_hands: Attributions
+### :raised_hands: Attributions
 
 Inspiration has been taken from the [official Docker image for the Caddy web server](https://github.com/caddyserver/caddy-docker). Thanks also to [this Moby issue](https://github.com/moby/moby/issues/8460) for providing the solution to binding low port numbers without root access.
 
-#### :muscle: Contributions
+### :muscle: Contributions
 
 If you have any suggestions for how this project could be improved, please [create an issue](https://github.com/zakcutner/gowhale/issues) or even [submit a pull request](https://github.com/zakcutner/gowhale/pulls). I am open to new ideas and I will try to respond quickly to contributions!
