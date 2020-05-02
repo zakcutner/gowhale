@@ -1,6 +1,6 @@
 FROM golang:alpine
 
-# Install Git in order to download Go module.
+# Install Git in order to download Go modules.
 RUN apk add --no-cache git
 
 # Change to the source directory.
